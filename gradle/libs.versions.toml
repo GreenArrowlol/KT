@@ -6,7 +6,7 @@ bstats = "3.2.1"
 reflections = "0.10.2"
 luckperms = "5.5"
 json = "20251224"
-placeholderapi = "2.12.2"
+placeholderapi = "2.12.3"
 vault = "1.7.1"
 hikari = "7.0.2"
 
