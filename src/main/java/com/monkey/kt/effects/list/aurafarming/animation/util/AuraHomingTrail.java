@@ -56,12 +56,20 @@ public class AuraHomingTrail {
                 }
 
                 Location baseStart = killer.getLocation().clone().add(0, 1.5, 0);
+                Location targetLocation = target.getLocation().clone().add(0, 1.2, 0);
+                if (baseStart.getWorld() == null || targetLocation.getWorld() == null
+                        || !baseStart.getWorld().equals(targetLocation.getWorld())) {
+                    taskCompleted[0] = true;
+                    removeLevitation();
+                    SchedulerWrapper.safeCancelTask(this);
+                    return;
+                }
+
                 Vector start = baseStart.toVector().clone();
 
                 Vector startOscillation = getOscillation(ticks, 0.25, 0.2);
                 Vector dynamicStart = start.clone().add(startOscillation);
-
-                Location end = target.getLocation().clone().add(0, 1.2, 0);
+                Location end = targetLocation;
 
                 if (!connected) {
                     Vector toTarget = end.toVector().subtract(headPosition.toVector());

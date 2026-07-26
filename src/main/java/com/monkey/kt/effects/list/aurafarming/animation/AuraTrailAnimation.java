@@ -66,18 +66,25 @@ public class AuraTrailAnimation {
                     if (trailEnded.get(i)) continue;
 
                     Location currentLoc = currentPositions.get(i);
+                    Location killerLocation = killer.getLocation();
+                    World killerWorld = killerLocation.getWorld();
+
+                    if (currentLoc.getWorld() == null || killerWorld == null || !killerWorld.equals(currentLoc.getWorld())) {
+                        trailEnded.set(i, true);
+                        continue;
+                    }
 
                     if (ticks[0] <= 80) {
                         Vector dir = directions.get(i).clone().multiply(0.15);
                         currentPositions.set(i, currentLoc.add(dir));
 
                     } else if (ticks[0] <= 120) {
-                        Vector toKiller = killer.getLocation().clone().add(0, 1.5, 0)
+                        Vector toKiller = killerLocation.clone().add(0, 1.5, 0)
                                 .subtract(currentLoc).toVector().normalize().multiply(0.12);
                         currentPositions.set(i, currentLoc.add(toKiller));
 
                     } else if (ticks[0] > 120 && ticks[0] <= 140) {
-                        Location killerLoc = killer.getLocation().clone().add(0, 0.5, 0);
+                        Location killerLoc = killerLocation.clone().add(0, 0.5, 0);
                         int ticksLeft = 140 - ticks[0] + 1;
 
                         Vector toKiller = killerLoc.toVector().subtract(currentLoc.toVector()).multiply(1.0 / ticksLeft);
