@@ -283,10 +283,10 @@ public class ReloadCommand implements SubCommand {
         if (currentDb == null) return true;
 
         String newType = plugin.getConfig().getString("database.type", "sqlite");
-        String newHost = plugin.getConfig().getString("database.mysql.host", "localhost");
-        int newPort = plugin.getConfig().getInt("database.mysql.port", 3306);
-        String newDatabase = plugin.getConfig().getString("database.mysql.database", "kt");
-        String newUsername = plugin.getConfig().getString("database.mysql.username", "root");
+        String newHost = plugin.getConfig().getString("database.host", "localhost");
+        int newPort = plugin.getConfig().getInt("database.port", 3306);
+        String newDatabase = plugin.getConfig().getString("database.database", "kt");
+        String newUsername = plugin.getConfig().getString("database.username", "root");
 
         return !currentDb.isConnected() || isDifferentDatabaseConfig(newType, newHost, newPort, newDatabase, newUsername);
     }

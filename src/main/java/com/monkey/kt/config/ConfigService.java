@@ -133,8 +133,12 @@ public class ConfigService {
                     if (value == null) value = defaultConfig.get(currentPath);
                 }
 
-                if (value instanceof MemorySection) {
-                    merged.append(indent).append(key).append(":").append("\n");
+                if (value instanceof MemorySection section) {
+                    if (section.getKeys(false).isEmpty()) {
+                        merged.append(indent).append(key).append(": {}").append("\n");
+                    } else {
+                        merged.append(indent).append(key).append(":").append("\n");
+                    }
                 } else if (value instanceof List) {
                     merged.append(indent).append(key).append(":").append("\n");
                     List<?> list = (List<?>) value;

@@ -501,13 +501,12 @@ public class CustomEffectConfig {
                 if (sound == null || sound.isBlank()) {
                     return null;
                 }
-                NamespacedKey key = sound.contains(":")
-                        ? NamespacedKey.fromString(sound.toLowerCase())
-                        : NamespacedKey.minecraft(sound.toLowerCase().replace('_', '.'));
-                if (key == null) {
-                    return null;
+                if (sound.contains(":")) {
+                    NamespacedKey key = NamespacedKey.fromString(sound.toLowerCase());
+                    return key != null ? Registry.SOUNDS.get(key) : null;
                 }
-                return Registry.SOUNDS.get(key);
+                org.bukkit.Sound legacy = org.bukkit.Sound.valueOf(sound.toUpperCase(Locale.ROOT));
+                return Registry.SOUNDS.get(legacy.getKey());
             } catch (Exception e) {
                 return null;
             }
